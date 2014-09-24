@@ -16,16 +16,25 @@
              "auto.commit.enable" "false"})
 
 (defn kafka-send []
+  (println "sending")
   (send-message p (message "test" (.getBytes "this is my message"))))
 
-(defn kafka-receive []
+(defn kafka-receive [chn]
   (with-resource [c (consumer config)]
     shutdown
     (doseq [message (messages c "test")]
-        (println message))))
+        (println "received")
+        (async/>!! chn message))))
 
-(async/thread (kafka-receive))
-(async/go (while true
-            (async/<! (async/timeout 500))
-            (println "sending")
-            (kafka-send)))
+(defn -main
+  [& args]
+  (let [chn (async/chan)]
+    (async/thread (kafka-receive chn))
+    (async/go (while true
+        (async/<! chn)
+        (async/<! (async/timeout 100))
+        (kafka-send)))
+    (async/go (while true
+        (async/<! (async/timeout 500))
+        (kafka-send)))
+    (Thread/sleep 50000)))

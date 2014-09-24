@@ -9,4 +9,9 @@
                  [org.clojure/core.async "0.1.338.0-5c5012-alpha"]]
   :main ^:skip-aot clj-hazelcast-example.core
   :target-path "target/%s"
-  :plugins [[lein-midje "3.1.3"]])
+  :plugins [[lein-midje "3.1.3"]]
+  :profiles {:main-hazelcast {:main clj-hazelcast-example.core}
+             :main-kafka {:main kafka.core}}
+   :aliases {"run-main-hazelcast" ["with-profile" "main-hazelcast" "run"]
+           "run-main-kafka" ["with-profile" "main-kafka" "run"]}
+  )
