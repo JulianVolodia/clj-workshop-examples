@@ -19,22 +19,16 @@
   (println "sending")
   (send-message p (message "test" (.getBytes "this is my message"))))
 
-(defn kafka-receive [chn]
+(defn kafka-receive []
   (with-resource [c (consumer config)]
     shutdown
     (doseq [message (messages c "test")]
-        (println "received")
-        (async/>!! chn message))))
+        (println "received"))))
 
 (defn -main
   [& args]
   (let [chn (async/chan)]
-    (async/thread (kafka-receive chn))
-    (async/go (while true
-        (async/<! chn)
-        (async/<! (async/timeout 100))
-        (kafka-send)))
-    (async/go (while true
-        (async/<! (async/timeout 500))
-        (kafka-send)))
-    (Thread/sleep 50000)))
+    (async/thread (kafka-receive))
+    (while true
+        (Thread/sleep 500)
+        (kafka-send))))
