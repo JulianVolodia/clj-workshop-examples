@@ -1,3 +1,13 @@
+;; REST service
+;
+; * compojure
+;
+;;what to do next?
+; * serve static page
+; * write data to mongo using congomongo
+; * implement method with POST
+
+
 (ns compojure-rest.handler
   (:use compojure.core)
   (:require [compojure.handler :as handler]

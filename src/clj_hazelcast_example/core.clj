@@ -1,3 +1,11 @@
+;; Hazelcast computations
+;
+;; what to do next?
+; * cache values for another client
+; * run ping-pong with other servers
+; * rewrite ping-pong method to callbacks
+
+
 (ns clj-hazelcast-example.core
   (:require [clj-hazelcast.core :as hzlc])
   (:gen-class))

@@ -1,3 +1,12 @@
+;; File diff
+;
+; * slurp
+;
+;; what to do next?
+;
+; * make diff algorithm smarter
+
+
 (ns file_diff
    (:require [clojure.java.io :as io]
              [clojure.string :as s]

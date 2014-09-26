@@ -1,3 +1,15 @@
+;; Read from Kafka
+;
+; * core.async
+; * go routines
+;
+;; what to do next?
+;
+; * rewrite the code to use core.async channels
+; * wait for messages on topic
+; * proxy to another topic
+
+
 (ns kafka.core
   (:require
         [clojure.core.async :as async]
